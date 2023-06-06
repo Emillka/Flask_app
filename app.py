@@ -32,6 +32,20 @@ class Perceptron():
     def predict(self, X):
         return np.where(self.net_input(X)>=0.0,1,-1)
 
+# Przykładowe dane treningowe
+X_train = np.array([[2.5, 1.2], [3.4, 0.8], [1.9, 3.2], [4.7, 2.5]])
+y_train = np.array([-1, 1, -1, 1])
+
+# Inicjalizacja modelu
+ppn = Perceptron()
+
+# Trenowanie modelu
+ppn.fit(X_train, y_train)
+
+# Zapis modelu
+with open('model.pkl', 'wb') as picklefile:
+    pickle.dump(ppn, picklefile)
+
 # Create a flask
 app = Flask(__name__)
 
@@ -47,7 +61,7 @@ def get_prediction():
                 petal_length]
 
     # Load pickled model file
-    with open('model.pkl',"rb") as picklefile:
+    with open('model.pkl', 'rb') as picklefile:
         model = pickle.load(picklefile)
         
     # Predict the class using the model
